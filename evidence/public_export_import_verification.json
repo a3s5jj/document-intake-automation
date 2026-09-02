@@ -1,0 +1,18 @@
+{
+  "verified_on": "2026-09-02",
+  "n8n_version": "2.27.4",
+  "environment": "blank isolated local profile with no external credentials",
+  "imports": [
+    {
+      "workflow_name": "Gmail Multi-Label to Sheets and Drive",
+      "node_count": 62,
+      "active": false
+    },
+    {
+      "workflow_name": "Telegram Receipt Photo Processing",
+      "node_count": 34,
+      "active": false
+    }
+  ],
+  "note": "Import success confirms schema acceptance and inactive state, not external integration execution."
+}

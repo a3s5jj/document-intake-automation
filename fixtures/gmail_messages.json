@@ -1,0 +1,42 @@
+{
+  "named_sender_multiple_attachments": {
+    "json": {
+      "id": "msg-multi-001",
+      "threadId": "thread-multi-001",
+      "internalDate": "1788091200000",
+      "matched_label": "Intake_Label1",
+      "matched_label_id": "Label_Test_1",
+      "payload": {
+        "headers": [
+          { "name": "From", "value": "\"María Santos\" <maria@example.test>" },
+          { "name": "Subject", "value": "Unicode and repeated filenames" }
+        ]
+      }
+    },
+    "binary": {
+      "attachment_0": { "fileName": "résumé 你好.pdf", "mimeType": "application/pdf", "data": "fixture-a" },
+      "attachment_1": { "fileName": "invoice.txt", "mimeType": "text/plain", "data": "fixture-b" },
+      "attachment_2": { "fileName": "invoice.txt", "mimeType": "text/plain", "data": "fixture-c" }
+    }
+  },
+  "email_only_no_attachment": {
+    "json": {
+      "id": "msg-empty-001",
+      "threadId": "thread-empty-001",
+      "internalDate": "1788091200000",
+      "matched_label": "Intake_Label2",
+      "matched_label_id": "Label_Test_2",
+      "payload": {
+        "headers": [
+          { "name": "From", "value": "fallback@example.test" },
+          { "name": "Subject", "value": "No attachment" }
+        ]
+      }
+    },
+    "binary": {}
+  },
+  "multilabel_copy": {
+    "message_id": "msg-shared-001",
+    "label_ids": ["Label_Test_1", "Label_Test_3"]
+  }
+}

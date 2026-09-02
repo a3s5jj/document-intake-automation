@@ -1,0 +1,16 @@
+{
+  "name": "document-intake-automation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portable n8n workflows for auditable Gmail and Telegram document intake.",
+  "type": "module",
+  "scripts": {
+    "build": "node tools/build_workflows.mjs",
+    "validate": "node tools/validate_workflows.mjs",
+    "test:transformations": "node tools/test_transformations.mjs",
+    "test": "npm run build && npm run validate && npm run test:transformations"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

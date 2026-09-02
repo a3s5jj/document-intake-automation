@@ -1,0 +1,23 @@
+{
+  "generated_on": "2026-09-01",
+  "n8n_target_version": "2.27.4",
+  "workflow_json_files": 2,
+  "structural_checks_passed": 687,
+  "transformation_tests_passed": 12,
+  "transformation_tests_total": 12,
+  "covered": [
+    "sender parsing and missing display-name fallback",
+    "multiple, zero, Unicode, and repeated attachment filenames",
+    "multi-label key separation",
+    "attachment binary preservation",
+    "COMPLETE, PARTIAL, FAILED, and NO_ATTACHMENTS aggregation",
+    "simulated Google Drive failure",
+    "largest Telegram photo selection",
+    "image-document acceptance and non-image rejection",
+    "valid, ambiguous, and invalid Gemini JSON",
+    "duplicate receipt and simulated upload failure outcomes"
+  ],
+  "workflow_1_runtime_status": "LIVE_VERIFIED",
+  "workflow_2_runtime_status": "NOT_LIVE_TESTED",
+  "private_ids_included": false
+}

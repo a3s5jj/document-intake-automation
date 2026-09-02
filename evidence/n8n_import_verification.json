@@ -1,0 +1,20 @@
+{
+  "verified_on": "2026-08-31",
+  "n8n_version": "2.27.4",
+  "imports": [
+    {
+      "workflow_name": "Gmail Multi-Label to Sheets and Drive",
+      "node_count": 62,
+      "active": false,
+      "execution_order": "v1"
+    },
+    {
+      "workflow_name": "Telegram Receipt Photo Processing",
+      "node_count": 34,
+      "active": false,
+      "execution_order": "v1"
+    }
+  ],
+  "note": "Successful import proves schema acceptance only. It is not runtime proof. Workflow IDs are omitted from the public evidence.",
+  "private_resource_ids_included": false
+}

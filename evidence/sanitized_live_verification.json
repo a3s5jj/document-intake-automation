@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-08-31T09:31:25.209Z",
+  "n8n_target_version": "2.27.4",
+  "workflow_1_live_status": "LIVE_VERIFIED",
+  "workflow_2_live_status": "NOT_LIVE_TESTED",
+  "first_run": {
+    "gmail_email_rows": 6,
+    "gmail_attachment_rows": 7,
+    "drive_files": 7,
+    "error_rows": 0,
+    "email_status_counts": {
+      "COMPLETE": 5,
+      "NO_ATTACHMENTS": 1
+    },
+    "email_label_counts": {
+      "Intake_Label1": 3,
+      "Intake_Label2": 1,
+      "Intake_Label3": 2
+    },
+    "source_label_message_counts": {
+      "Intake_Label1": 3,
+      "Intake_Label2": 1,
+      "Intake_Label3": 2
+    },
+    "uploaded_filenames": [
+      "multi.csv",
+      "résumé 你好.pdf",
+      "same-name.txt",
+      "same-name.txt",
+      "shared.bin",
+      "shared.bin",
+      "single.txt"
+    ],
+    "uploaded_md5": [
+      {
+        "name": "multi.csv",
+        "md5": "7964a402f75113e58d5ccba1f77e3dde"
+      },
+      {
+        "name": "résumé 你好.pdf",
+        "md5": "54aa0db332dd1cfc10da87708efa2ded"
+      },
+      {
+        "name": "same-name.txt",
+        "md5": "850cd541af4b6013eeb064c2357c7fdb"
+      },
+      {
+        "name": "same-name.txt",
+        "md5": "1bfbce500545ce151b768199157878cd"
+      },
+      {
+        "name": "shared.bin",
+        "md5": "f7b96449717432e6e5b950261cb5c3b0"
+      },
+      {
+        "name": "shared.bin",
+        "md5": "f7b96449717432e6e5b950261cb5c3b0"
+      },
+      {
+        "name": "single.txt",
+        "md5": "92a2898cb607af38a7d92c3c8fb64731"
+      }
+    ]
+  },
+  "rerun": {
+    "gmail_email_rows": 6,
+    "gmail_attachment_rows": 7,
+    "drive_files": 7,
+    "counts_unchanged": true
+  },
+  "checks": {
+    "gmail_email_rows_expected_6": true,
+    "gmail_attachment_rows_expected_7": true,
+    "drive_files_expected_7": true,
+    "no_error_rows": true,
+    "email_keys_unique": true,
+    "attachment_keys_unique": true,
+    "required_statuses": true,
+    "labels_untouched_and_present": true,
+    "rerun_email_rows_unchanged": true,
+    "rerun_attachment_rows_unchanged": true,
+    "rerun_drive_files_unchanged": true,
+    "filenames_preserved": true,
+    "repeated_filename_preserved": true,
+    "drive_app_properties_present": true,
+    "drive_hashes_present": true,
+    "drive_hashes_match_seed_bytes": true
+  },
+  "private_ids_included": false,
+  "public_label_names_normalized": true
+}

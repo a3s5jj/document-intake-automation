@@ -1,0 +1,11 @@
+{
+  "complete": {
+    "content": { "parts": [{ "text": "{\"merchant_name\":\"Example Store\",\"amount\":123.45,\"currency\":\"php\",\"receipt_date\":\"2026-08-31\"}" }] }
+  },
+  "ambiguous": {
+    "content": { "parts": [{ "text": "{\"merchant_name\":null,\"amount\":null,\"currency\":null,\"receipt_date\":null}" }] }
+  },
+  "invalid_json": {
+    "content": { "parts": [{ "text": "merchant might be Example Store" }] }
+  }
+}

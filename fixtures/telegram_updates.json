@@ -1,0 +1,45 @@
+{
+  "photo": {
+    "json": {
+      "update_id": 9001,
+      "message": {
+        "message_id": 77,
+        "date": 1788091200,
+        "chat": { "id": 12345, "type": "private" },
+        "from": { "id": 12345, "first_name": "Test", "last_name": "Applicant" },
+        "photo": [
+          { "file_id": "small", "file_unique_id": "unique-small", "width": 90, "height": 90, "file_size": 1000 },
+          { "file_id": "largest", "file_unique_id": "unique-largest", "width": 1280, "height": 960, "file_size": 500000 },
+          { "file_id": "medium", "file_unique_id": "unique-medium", "width": 640, "height": 480, "file_size": 100000 }
+        ]
+      }
+    },
+    "binary": { "data": { "fileName": "photo.jpg", "mimeType": "image/jpeg", "data": "fixture-photo" } }
+  },
+  "image_document": {
+    "json": {
+      "update_id": 9002,
+      "message": {
+        "message_id": 78,
+        "date": 1788091200,
+        "chat": { "id": 12345, "type": "private" },
+        "from": { "id": 12345, "username": "test_applicant" },
+        "document": { "file_id": "doc-image", "file_unique_id": "unique-doc", "file_name": "receipt.webp", "mime_type": "image/webp" }
+      }
+    },
+    "binary": { "data": { "fileName": "receipt.webp", "mimeType": "image/webp", "data": "fixture-document" } }
+  },
+  "non_image": {
+    "json": {
+      "update_id": 9003,
+      "message": {
+        "message_id": 79,
+        "date": 1788091200,
+        "chat": { "id": 12345, "type": "private" },
+        "from": { "id": 12345, "first_name": "Test" },
+        "text": "hello"
+      }
+    },
+    "binary": {}
+  }
+}
