@@ -1,24 +1,36 @@
 # Document Intake Automation
 
-Two portable n8n workflows for moving incoming documents into a structured,
-reviewable system. One handles Gmail attachments. The other handles receipt
-images sent to Telegram.
+Two n8n workflows that file incoming documents automatically. Gmail attachments and
+Telegram receipt photos land in Google Drive, with a row in Google Sheets for each
+one. Re-running them never creates a duplicate.
 
-The exports are inactive, use configuration placeholders, and include synthetic
-fixtures and deterministic tests.
+## Problem
 
-## Evidence first
+Document intake breaks in the same few places every time. A retry files the same
+email twice. An attachment uploads but its spreadsheet row never appears, so the
+trail goes quiet. A model reads a blurry receipt and fills the gaps with plausible
+guesses. Each of those failures looks like a successful run from the outside.
 
-| Workflow | Public status | What that means |
+## Verification status
+
+| Workflow | Status | What that means |
 |---|---|---|
-| Gmail labels to Sheets and Drive | `LIVE_VERIFIED` | Tested twice against an isolated Google sandbox with synthetic messages. The replay created no duplicate rows or files. |
-| Telegram receipts to Sheets and Drive | `OFFLINE_VERIFIED`, `NOT_LIVE_TESTED` | Imported successfully and tested with fixtures. No Telegram webhook or Gemini API call was made because those credentials were not available. |
+| Gmail to Sheets and Drive | Live-verified | I tested it twice against an isolated Google sandbox using synthetic messages. The replay created no duplicate rows or files. |
+| Telegram receipts | Offline only | It imports cleanly and passes fixture tests. No Telegram webhook or Gemini call ever ran, because I did not have those credentials. |
 
-The final Gmail run produced six email-label records, seven attachment records,
-seven Drive files, and zero error rows. A second run over the same 48-hour window
-left all three counts unchanged. The messages and files were synthetic.
+The final Gmail run produced:
 
-## What it does
+| Result | Count |
+|---|---:|
+| Email-label records | 6 |
+| Attachment records | 7 |
+| Drive files | 7 |
+| Error rows | 0 |
+
+A second run over the same 48-hour window left every count unchanged. The messages
+and files were synthetic.
+
+## How it works
 
 ```mermaid
 flowchart LR
@@ -51,31 +63,23 @@ flowchart LR
   class DRIVE,SHEETS ext
 ```
 
-Both workflows preserve a clear operational trail in Google Sheets. They use
-stable keys for retries, process nested attachment work serially, and keep raw
-receipt images even when field extraction fails.
+Both workflows leave a clear trail in Google Sheets. They use stable keys so retries
+are safe, process nested attachment work one item at a time, and keep the raw receipt
+image even when field extraction fails.
 
-## Important decisions
+## Key decisions
 
-- Gmail searches are read-only. The workflow does not mark messages as read,
-  archive them, or change labels.
-- A message with two monitored labels is intentionally handled once per label.
-- Sheet writes use stable keys, and Drive uploads use matching private app
-  properties, so a rolling time window can be replayed safely.
-- Telegram submission time comes from the message timestamp, not text found in
-  the image.
-- Model output is treated as untrusted JSON. Missing or ambiguous fields become
-  `null`; the workflow does not invent values.
-- Integration failures become explicit workflow outcomes instead of disappearing
-  inside a successful execution.
-
-## Prerequisites
-
-- Node.js 20 or later for the tests
-- n8n 2.27.4, or a compatible version you have validated
-- Google OAuth credentials for Gmail, Drive, and Sheets
-- A Telegram bot and Gemini credential only for the Telegram workflow
-- n8n binary storage configured outside process memory for attachment workloads
+- Gmail searches are read-only. The workflow never marks messages read, archives
+  them, or changes labels.
+- A message carrying two monitored labels is handled once per label, on purpose.
+- Sheet writes use stable keys and Drive uploads carry matching private app
+  properties, so a rolling time window replays safely.
+- Telegram submission time comes from the message timestamp, never from text found
+  in the image.
+- Model output is untrusted JSON. Missing or ambiguous fields become `null`. The
+  workflow invents nothing.
+- Integration failures surface as explicit workflow outcomes instead of vanishing
+  inside a run that reports success.
 
 ## Quick start
 
@@ -104,17 +108,16 @@ profile to start the editor:
 n8n start
 ```
 
-1. Open `http://localhost:5678` in a browser and sign in to your local n8n
-   workspace.
+1. Open `http://localhost:5678` in a browser and sign in to your local n8n workspace.
 2. Open **Overview**, then **Workflows**.
 3. Select **Gmail Multi-Label to Sheets and Drive** or
    **Telegram Receipt Photo Processing**.
-4. In the editor, use **Zoom to Fit** to see the complete workflow canvas.
+4. In the editor, use **Zoom to Fit** to see the complete canvas.
 
-Credentials are not required just to inspect the nodes and connections. Keep the
-imported workflows inactive: do not publish, execute, or save them while doing a
-clean review. Configure and test a separate private copy after binding credentials
-and replacing every placeholder.
+You do not need credentials just to inspect the nodes and connections. Keep the
+imported workflows inactive: do not publish, execute, or save them during a clean
+review. Configure and test a separate private copy after binding credentials and
+replacing every placeholder.
 
 ## Configuration placeholders
 
@@ -126,34 +129,32 @@ The exports contain placeholders for:
 - Gmail and Telegram root Drive folder IDs
 - the Gemini model ID
 
-The exact inventory and the required Sheet headers are documented in the workflow
-notes and checked by `npm test`. Real credentials and resource IDs do not belong
-in these JSON files.
+The workflow notes document the exact inventory and the required Sheet headers, and
+`npm test` checks them. Real credentials and resource IDs do not belong in these JSON
+files.
 
-## Verification
+## Scope and limits
 
-The fresh public-export test run on 2026-09-02 passed:
+The exports ship inactive, use configuration placeholders, and carry synthetic
+fixtures.
 
-- 687 structural and export checks
-- 12 of 12 fixture-driven transformation tests
-- compilation of every Code node and n8n expression
-- graph reachability, node-version, inactive-state, placeholder, and layout checks
-- both renamed public exports imported into an isolated n8n 2.27.4 profile and
-  remained inactive
+The public test run on 2026-09-02 passed 687 structural and export checks, 12 of 12
+fixture-driven transformation tests, compilation of every Code node and n8n
+expression, and graph reachability, node-version, inactive-state, placeholder, and
+layout checks. Both renamed exports imported into an isolated n8n 2.27.4 profile and
+stayed inactive. See [TEST_REPORT.md](TEST_REPORT.md) and the sanitized files under
+[`evidence/`](evidence/).
 
-See [TEST_REPORT.md](TEST_REPORT.md) and the sanitized files under
-[`evidence/`](evidence/) for the evidence boundary. Import success proves schema
-acceptance; it does not prove that an external integration ran.
+Import success proves n8n accepts the schema. It does not prove an external
+integration ran.
 
-## Limitations
-
-- Telegram and Gemini were not live-tested in this public package.
-- The workflows target n8n 2.27.4 and need compatibility review on other versions.
-- The Gmail workflow creates one record per message-label pair, not one record per
-  unique message.
-- Operators still need retention rules, access controls, and data-processing terms
-  appropriate to their jurisdiction.
-- No throughput or cost claim is made from the small synthetic verification set.
+- Telegram and Gemini were never live-tested in this package.
+- Built against n8n 2.27.4. Other versions need a compatibility review.
+- The Gmail workflow creates one record per message-label pair, not one per unique
+  message.
+- Operators still need their own retention rules, access controls, and
+  data-processing terms.
+- The synthetic verification set is too small to support a throughput or cost claim.
 
 ## Repository map
 
