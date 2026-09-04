@@ -22,18 +22,33 @@ left all three counts unchanged. The messages and files were synthetic.
 
 ```mermaid
 flowchart LR
-  A[Gmail labels] --> B[Normalize email]
-  B --> C[Upsert email record]
-  B --> D[Process attachments serially]
-  D --> E[Find or create Drive folders]
-  E --> F[Reuse or upload file]
-  F --> G[Upsert attachment record]
+  subgraph GM [Gmail intake]
+    A[Labeled email] --> B[Normalize email]
+    B --> C[Process attachments serially]
+    C --> D[Find or create Drive folders]
+    D --> E[Reuse or upload file]
+  end
+  subgraph TG [Telegram intake]
+    F[Photo message] --> G[Validate update]
+    G --> H[Reuse or upload image]
+    H --> I[Extract receipt fields]
+    I --> J[Validate JSON]
+  end
+  E --> DRIVE[(Google Drive)]
+  H --> DRIVE
+  B --> SHEETS[(Google Sheets)]
+  E --> SHEETS
+  J --> SHEETS
 
-  H[Telegram image] --> I[Validate update]
-  I --> J[Reuse or upload image]
-  J --> K[Extract receipt fields]
-  K --> L[Validate JSON]
-  L --> M[Upsert receipt record]
+  classDef entry fill:#dbeafe,stroke:#1d4ed8,color:#0f172a
+  classDef ai fill:#ede9fe,stroke:#6d28d9,color:#0f172a
+  classDef logic fill:#dcfce7,stroke:#15803d,color:#0f172a
+  classDef ext fill:#fef3c7,stroke:#b45309,color:#0f172a
+  classDef stop fill:#fee2e2,stroke:#b91c1c,color:#0f172a
+  class A,F entry
+  class I ai
+  class B,C,D,E,G,H,J logic
+  class DRIVE,SHEETS ext
 ```
 
 Both workflows preserve a clear operational trail in Google Sheets. They use
