@@ -33,7 +33,7 @@ and files were synthetic.
 ## How it works
 
 ```mermaid
-flowchart LR
+flowchart TD
   subgraph GM [Gmail intake]
     A[Labeled email] --> B[Normalize email]
     B --> C[Process attachments serially]
